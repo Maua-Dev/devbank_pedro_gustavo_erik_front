@@ -1,59 +1,23 @@
-import { useState, useEffect } from "react"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 
-// função principal do app, gerenciar telas e conexção com API
+import TelaInicial from "./pages/TelaInicial"
+import TelaConta from "./pages/TelaConta"
+import TelaDeposito from "./pages/TelaDeposito"
+import TelaSaque from "./pages/TelaSaque"
+import TelaTransacoes from "./pages/TelaTransacoes"
+
 function App() {
-  const [tela, setTela] = useState("home")
-  const [url, setUrl] = useState("")
-  const [erro, setErro] = useState("")
-  const [saldo, setSaldo] = useState(0)
-
-   useEffect(() => {
-    if (tela === "conta") {
-      const apiUrl = localStorage.getItem("api_url")
-
-      fetch(apiUrl + "/")
-        .then((res) => res.json())
-        .then((data) => setSaldo(data.balance))
-    }
-  }, [tela])
-
-  // conectar a API
-  const conectar = () => {
-    if (!url) return
-
-    localStorage.setItem("api_url", url)
-    setTela("conta")
-  }
-  // tela 1 - inserir API e conectar
-  if (tela === "home") {
-    return (
-      <div>
-        <h1>DevBank</h1>
-        <input
-          type="text"
-          placeholder="Digite a URL da API"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-        />
-        <br />Teste<br />
-        <button onClick={conectar}>Conectar</button>
-        {erro && <p>{erro}</p>}
-      </div>
-    )
-  }
-//tela 2 - saldo, depositar, sacar e transação.
-  if (tela === "conta") {
-    return (
-      <div>
-        <h1>Conta</h1>
-        <p>Saldo: em R$ {saldo}</p>
-
-        <button>Depositar</button>
-        <button>Sacar</button>
-        <button>Transações</button>
-      </div>
-    )
-  }
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<TelaInicial />} />
+        <Route path="/conta" element={<TelaConta />} />
+        <Route path="/deposito" element={<TelaDeposito />} />
+        <Route path="/saque" element={<TelaSaque />} />
+        <Route path="/transacoes" element={<TelaTransacoes />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
-export default App 
+export default App
