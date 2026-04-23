@@ -1,4 +1,5 @@
 import CardNotas from "../components/CardNotas"
+import BotaoNavegacao from "../components/BotaoNavegacao"
 
 const notas = [
   {valorNota: 2},
@@ -9,6 +10,7 @@ const notas = [
   {valorNota: 100},
   {valorNota: 200},
 ]
+
 function TelaDeposito() {
   return <div>
     <h1>Tela Depósito</h1>
@@ -16,9 +18,8 @@ function TelaDeposito() {
     <div style={{display: "flex", gap: "10px"}}>
       {notas.map((nota) => (<CardNotas valorNota={nota.valorNota} />))}
     </div>
-    <br />
     <div style={{display: "flex", gap:"10px"}}>
-    <button>Voltar</button>
+    <BotaoNavegacao nome="Voltar" rota="conta" />
     <button>Depositar</button>
     </div>
   </div>

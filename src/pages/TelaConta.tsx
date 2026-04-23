@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import BotaoNavegacao from "../components/BotaoNavegacao"
 
 function TelaConta() {
   const [saldo, setSaldo] = useState(0)
-  const navigate = useNavigate()
+
 
   useEffect(() => {
     const apiUrl = localStorage.getItem("api_url")
@@ -13,20 +13,28 @@ function TelaConta() {
       .then((data) => setSaldo(data.balance))
   }, [])
 
+  const rotas = [
+    {
+      nome: "Sacar",
+      rota: "saque"
+    },
+    {
+      nome: "Deposito",
+      rota: "deposito"
+    },
+    {
+      nome: "Transacao",
+      rota: "transacoes"
+    }
+  ]
+
   return (
     <div>
       <h1>Conta</h1>
-
       <p>Saldo: R$ {saldo}</p>
-      <button onClick={() => navigate("/deposito")}>Depositar</button>
-
-      <button onClick={() => navigate("/saque")}>
-        Sacar
-      </button>
-
-      <button onClick={() => navigate("/transacoes")}>
-        Transações
-      </button>
+      <div style={{display: "flex"}}>
+      {rotas.map((rota) => <BotaoNavegacao nome={rota.nome} rota={rota.rota} />)}
+      </div>
     </div>
   )
 }
