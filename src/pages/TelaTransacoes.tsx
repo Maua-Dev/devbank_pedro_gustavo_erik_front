@@ -1,5 +1,10 @@
-function TelaTransacoes() {
-  return <h1>Tela Transações</h1>
+import BotaoNavegacao from "../components/BotaoNavegacao"
+
+export default function TelaTransacoes() {
+
+  return <div>
+    <h1>Tela Transações</h1>
+    <BotaoNavegacao nome="Voltar" rota="conta" />
+    </div>
 }
 
-export default TelaTransacoes
