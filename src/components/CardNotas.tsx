@@ -2,17 +2,18 @@ import { useState } from "react";
 
 interface CardNotas{
     valorNota: number;
+    className?: string;
 }
 
-export default function CardNotas({valorNota}: CardNotas){
+export default function CardNotas({valorNota, className}: CardNotas){
     const [qntdNotas, setQntdNotas] = useState(0)
     return(
-        <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+        <div className="">
             <p>{valorNota}R$</p>
             <div style={{display: "flex", gap: "5px"}}>
-                <button onClick={() => {qntdNotas > 0 ? setQntdNotas(qntdNotas - 1) : alert("Não à notas neste valor depositadas")}}>-</button>
+                <button className={className} onClick={() => {qntdNotas > 0 ? setQntdNotas(qntdNotas - 1) : alert("Não à notas neste valor depositadas")}}>-</button>
                 <p>{qntdNotas}</p>
-                <button onClick={() => {setQntdNotas(qntdNotas + 1)}}>+</button>
+                <button className={className} onClick={() => {setQntdNotas(qntdNotas + 1)}}>+</button>
             </div>
         </div>
     )

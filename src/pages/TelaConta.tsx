@@ -29,11 +29,11 @@ function TelaConta() {
   ]
 
   return (
-    <div>
+    <div className="flex-col content-center justify-center ">
       <h1>Conta</h1>
       <p>Saldo: R$ {saldo}</p>
-      <div style={{display: "flex"}}>
-      {rotas.map((rota) => <BotaoNavegacao nome={rota.nome} rota={rota.rota} />)}
+      <div className="flex gap-1">
+      {rotas.map((rota) => <BotaoNavegacao className="bg-[#567DB7] " nome={rota.nome} rota={rota.rota} />)}
       </div>
     </div>
   )
