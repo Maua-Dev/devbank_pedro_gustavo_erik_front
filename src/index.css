@@ -1,7 +1,4 @@
 @import "tailwindcss";
-@theme {
-    --color-bluesky-300: oklch(0.5861 0.0999 258.11);
-}
 
 :root {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

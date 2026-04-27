@@ -33,7 +33,7 @@ function TelaConta() {
       <h1>Conta</h1>
       <p>Saldo: R$ {saldo}</p>
       <div className="flex gap-1">
-      {rotas.map((rota) => <BotaoNavegacao className="bg-bluesky-300 " nome={rota.nome} rota={rota.rota} />)}
+      {rotas.map((rota) => <BotaoNavegacao className="bg-[#567DB7] " nome={rota.nome} rota={rota.rota} />)}
       </div>
     </div>
   )
