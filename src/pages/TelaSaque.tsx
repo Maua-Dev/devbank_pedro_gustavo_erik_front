@@ -1,4 +1,5 @@
 import CardNotas from "../components/CardNotas";
+import CardQtde from "../components/CardQtde";
 import BotaoNavegacao from "../components/BotaoNavegacao";
 import { useState } from "react";
 const notas = [
@@ -37,14 +38,8 @@ function TelaSaque() {
 	);
 	return (
 		<div>
-			<div>
-				<p>Quantidade Depositada: </p>
-				<p>R$ {totalSaque}</p>
-			</div>
-			<div>
-				<p>Quantidade final: </p>
-				<p>R$ {totalSaque + saldo}</p>
-			</div>
+      <CardQtde total={totalSaque} titulo="Quantidade Saque"/>
+      <CardQtde total={saldo - totalSaque} titulo="Quantidade Saque"/>
 			<p>Selecione as Celulas que Você deseja</p>
 			<div style={{ display: "flex", gap: "10px" }}>
 				{notas.map((nota) => (
