@@ -14,22 +14,31 @@ function TelaInicial() {
 		localStorage.setItem("api_url", url);
 		navigate("/conta");
 	};
+// letreiro, input para URL, input para o botão de entrada. Fonte para o fundo:: #567DB7
 
 	return (
-		<div>
-			<h1>DevBank</h1>
+		<div className="h-screen w-full flex items-center justify-center bg-[#567DB7]">
+			<div className="flex flex-col items-center gap-6">
 
-			<input
-				type="text"
-				placeholder="Digite a URL da API"
-				value={url}
-				onChange={(e) => setUrl(e.target.value)}
-			/>
+				<h1 className="text-white text-5xl font-light devbank-title">
+					Dev<span className="font-bold">Bank</span>
+				</h1>
+				<input
+					type="text"
+					placeholder="Insira aqui a URL da sua API"
+					value={url}
+					onChange={(e) => setUrl(e.target.value)}
+					className="w-[400px] p-3 rounded-xl bg-gray-200 text-black text-center outline-none input-custom"
+				/>
 
-			<br />
-			<br />
+				<button
+					onClick={conectar}
+					className="px-10 py-2 rounded-xl bg-gray-300 hover:bg-gray-400 transition btn-custom"
+				>
+					Entrar
+				</button>
 
-			<button onClick={conectar}>Conectar</button>
+			</div>
 		</div>
 	);
 }

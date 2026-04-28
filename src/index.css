@@ -4,3 +4,13 @@
 :root {
     font-family: "Josefin Sans", sans-serif;
 }
+/* TelaInicial */
+devbank-title {
+    letter-spacing: 2px;
+}
+input_custom {
+    font-weight: 500;
+}
+bnt-custom {
+    font-weight: 500;
+}
