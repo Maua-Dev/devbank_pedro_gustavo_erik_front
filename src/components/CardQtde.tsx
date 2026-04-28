@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 interface CardQtde {
     total: number;
     titulo: string;
