@@ -3,15 +3,4 @@
 
 :root {
     font-family: "Josefin Sans", sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
-}
-
-button:hover {
-    border-color: #646cff;
-}
-
-button:focus,
-button:focus-visible {
-    outline: 4px auto -webkit-focus-ring-color;
 }
