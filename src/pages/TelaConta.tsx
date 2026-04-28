@@ -1,42 +1,48 @@
-import { useEffect, useState } from "react"
-import BotaoNavegacao from "../components/BotaoNavegacao"
+import { useEffect, useState } from "react";
+import BotaoNavegacao from "../components/BotaoNavegacao";
 
 function TelaConta() {
-  const [saldo, setSaldo] = useState(0)
+	const [saldo, setSaldo] = useState(0);
 
+	useEffect(() => {
+		const apiUrl = localStorage.getItem("api_url");
 
-  useEffect(() => {
-    const apiUrl = localStorage.getItem("api_url")
+		fetch(apiUrl + "/")
+			.then((res) => res.json())
+			.then((data) => setSaldo(data.balance));
+	}, []);
 
-    fetch(apiUrl + "/")
-      .then((res) => res.json())
-      .then((data) => setSaldo(data.balance))
-  }, [])
+	const rotas = [
+		{
+			nome: "Sacar",
+			rota: "saque",
+		},
+		{
+			nome: "Deposito",
+			rota: "deposito",
+		},
+		{
+			nome: "Transacao",
+			rota: "transacoes",
+		},
+	];
 
-  const rotas = [
-    {
-      nome: "Sacar",
-      rota: "saque"
-    },
-    {
-      nome: "Deposito",
-      rota: "deposito"
-    },
-    {
-      nome: "Transacao",
-      rota: "transacoes"
-    }
-  ]
-
-  return (
-    <div className="flex-col content-center justify-center ">
-      <h1>Conta</h1>
-      <p>Saldo: R$ {saldo}</p>
-      <div className="flex gap-1">
-      {rotas.map((rota) => <BotaoNavegacao key={rota.nome}className="bg-[#567DB7] " nome={rota.nome} rota={rota.rota} />)}
-      </div>
-    </div>
-  )
+	return (
+		<div className="flex-col content-center justify-center ">
+			<h1>Conta</h1>
+			<p>Saldo: R$ {saldo}</p>
+			<div className="flex gap-1">
+				{rotas.map((rota) => (
+					<BotaoNavegacao
+						key={rota.nome}
+						className="bg-[#567DB7] "
+						nome={rota.nome}
+						rota={rota.rota}
+					/>
+				))}
+			</div>
+		</div>
+	);
 }
 
-export default TelaConta
+export default TelaConta;
