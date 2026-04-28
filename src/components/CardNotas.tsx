@@ -20,7 +20,7 @@ export default function CardNotas({ valorNota, onchange }: CardNotas) {
 				</p>
 				<div className="flex flex-row justify-around">
 					<button
-						className="w-16.75 h-10 bg-[#567DB7] text-white rounded-[30px]"
+						className="w-16.75 h-10 bg-[#567DB7] text-white rounded-[30px] cursor-pointer"
 						onClick={() => {
 							qntdNotas > 0
 								? alterarQntde(qntdNotas - 1)
@@ -33,7 +33,7 @@ export default function CardNotas({ valorNota, onchange }: CardNotas) {
 						{qntdNotas}
 					</p>
 					<button
-						className="w-16.75 h-10 rounded-[30px] bg-[#567DB7] text-white"
+						className="w-16.75 h-10 rounded-[30px] bg-[#567DB7] text-white cursor-pointer"
 						onClick={() => {
 							alterarQntde(qntdNotas + 1);
 						}}
