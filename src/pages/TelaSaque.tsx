@@ -37,6 +37,14 @@ function TelaSaque() {
 	);
 	return (
 		<div>
+			<div>
+				<p>Quantidade Depositada: </p>
+				<p>R$ {totalSaque}</p>
+			</div>
+			<div>
+				<p>Quantidade final: </p>
+				<p>R$ {totalSaque + saldo}</p>
+			</div>
 			<p>Selecione as Celulas que Você deseja</p>
 			<div style={{ display: "flex", gap: "10px" }}>
 				{notas.map((nota) => (
