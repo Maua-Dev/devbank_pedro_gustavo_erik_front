@@ -63,7 +63,7 @@ export default function TelaDeposito() {
 							nome="Voltar"
 							rota="conta"
 						/>
-						<button className="bg-[#567DB7] text-white text-[48px] w-57.5 h-27.25 rounded-[30px]">
+						<button className="bg-[#567DB7] text-white text-[48px] w-57.5 h-27.25 rounded-[30px] cursor-pointer">
 							Depositar
 						</button>
 					</div>

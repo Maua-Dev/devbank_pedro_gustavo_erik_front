@@ -22,20 +22,24 @@ function TelaConta() {
 			rota: "deposito",
 		},
 		{
-			nome: "Transacao",
+			nome: "Transação",
 			rota: "transacoes",
 		},
 	];
 
 	return (
-		<div className="flex-col content-center justify-center ">
-			<h1>Conta</h1>
-			<p>Saldo: R$ {saldo}</p>
-			<div className="flex gap-1">
+		<div className="flex-col content-center justify-center w-full h-full ">
+			<header className="flex justify-center items-center text-center bg-[#567DB7] text-white w-full h-102.25 rounded-b-[60px]">
+				<div>
+					<h1 className="text-[96px]">Saldo Atual:</h1>
+					<h2 className="text-[55px]">R$ {saldo}</h2>
+				</div>
+			</header>
+			<div className="flex justify-center gap-27.25">
 				{rotas.map((rota) => (
 					<BotaoNavegacao
 						key={rota.nome}
-						className="bg-[#567DB7] "
+						className="bg-[#567DB7] text-[55px] text-white w-85.5 h-79.25 rounded-[60px] mt-25.75 mb-48.75"
 						nome={rota.nome}
 						rota={rota.rota}
 					/>

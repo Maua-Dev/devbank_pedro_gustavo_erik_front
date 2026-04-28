@@ -14,7 +14,7 @@ export default function BotaoNavegacao({
 	const navigate = useNavigate();
 	return (
 		<div className="">
-			<button className={className} onClick={() => navigate("/" + rota)}>
+			<button className={className + " cursor-pointer"} onClick={() => navigate("/" + rota)}>
 				{nome}
 			</button>
 		</div>

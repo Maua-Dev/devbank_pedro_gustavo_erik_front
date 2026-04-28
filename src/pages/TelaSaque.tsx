@@ -1,6 +1,6 @@
 import CardNotas from "../components/CardNotas";
 import BotaoNavegacao from "../components/BotaoNavegacao";
-
+import { useState } from "react";
 const notas = [
 	{ valorNota: 2 },
 	{ valorNota: 5 },
@@ -12,18 +12,44 @@ const notas = [
 ];
 
 function TelaSaque() {
+	const saldo = 1000;
+	const [notasSelecionadas, setNotasSelecionadas] = useState<{
+		[chave: number]: number;
+	}>({});
+
+	function atualizarNotas(valor: number, qntde: number) {
+		setNotasSelecionadas((prev) => {
+			const novo = { ...prev };
+
+			if (qntde === 0) {
+				delete novo[valor];
+			} else {
+				novo[valor] = qntde;
+			}
+			return novo;
+		});
+	}
+
+	const totalSaque = Object.entries(notasSelecionadas).reduce(
+		(totalSaque, [valor, qnde]) =>
+			totalSaque + Number.parseInt(valor) * qnde,
+		0,
+	);
 	return (
 		<div>
-			<h1>Tela Saque</h1>
 			<p>Selecione as Celulas que Você deseja</p>
 			<div style={{ display: "flex", gap: "10px" }}>
 				{notas.map((nota) => (
-					<CardNotas valorNota={nota.valorNota} />
+					<CardNotas
+						key={nota.valorNota}
+						valorNota={nota.valorNota}
+						onchange={atualizarNotas}
+					/>
 				))}
 			</div>
 			<div style={{ display: "flex", gap: "10px" }}>
 				<BotaoNavegacao nome="Voltar" rota="conta" />
-				<button>Retirar</button>
+				<button className="cursor-pointer">Retirar</button>
 			</div>
 		</div>
 	);
