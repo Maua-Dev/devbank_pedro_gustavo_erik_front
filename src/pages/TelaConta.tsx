@@ -26,27 +26,36 @@ function TelaConta() {
 			rota: "transacoes",
 		},
 	];
-
+// Ajuste de responsividade
 	return (
-		<div className="flex-col content-center justify-center w-full h-full ">
-			<header className="flex justify-center items-center text-center bg-[#567DB7] text-white w-full h-102.25 rounded-b-[60px]">
-				<div>
-					<h1 className="text-[96px]">Saldo Atual:</h1>
-					<h2 className="text-[55px]">R$ {saldo}</h2>
-				</div>
+		<div className="min-h-screen w-full bg-gray-200 flex flex-col">
+			<header className="bg-[#567DB7] text-white w-full rounded-b-[40px] flex flex-col items-center justify-center py-10">
+				<h1 className="text-3xl md:text-5xl font-light">
+					Saldo Atual:
+				</h1>
+				<h2 className="text-2xl md:text-4xl mt-5">
+					R$ {saldo}
+				</h2>
 			</header>
-			<div className="flex justify-center gap-27.25">
-				{rotas.map((rota) => (
-					<BotaoNavegacao
-						key={rota.nome}
-						className="bg-[#567DB7] text-[55px] text-white w-85.5 h-79.25 rounded-[60px] mt-25.75 mb-48.75"
-						nome={rota.nome}
-						rota={rota.rota}
-					/>
-				))}
-			</div>
+			<div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 mt-60 md:mt-45 px-4">
+	{rotas.map((rota) => (
+		<BotaoNavegacao
+			key={rota.nome}
+			nome={rota.nome}
+			rota={rota.rota}
+			className="bg-[#567DB7] text-white rounded-2xl w-40 h-32 md:w-48 md:h-40 flex items-center justify-center text-lg md:text-xl
+			/* efeito quando passar o mouse sobre o btn */
+			transition-all duration-300
+			hover:scale-105
+			hover:brightness-110
+			hover:shadow-2xl"
+		/>
+				))	}
+</div>
+
 		</div>
 	);
+
 }
 
 export default TelaConta;

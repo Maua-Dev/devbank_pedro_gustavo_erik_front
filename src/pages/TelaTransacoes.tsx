@@ -31,7 +31,7 @@ export default function TelaTransacoes() {
 		},
 	];
 	return (
-		<div className="flex flex-col bg-[#CBD8DD] w-full h-full">
+		<div className="min-h-screen bg-[#CBD8DD] flex flex-col">
 			<header className="bg-[#567DB7] rounded-b-[60px]">
 				<h1 className="text-[96px] text-white ml-9.25">
 					Histórico de Transações
