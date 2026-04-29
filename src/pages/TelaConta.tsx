@@ -47,7 +47,7 @@ function TelaConta() {
 			/* efeito quando passar o mouse sobre o btn */
 			transition-all duration-300
 			hover:scale-105
-			hover:brightness-110
+			hover:brightness-100
 			hover:shadow-2xl"
 		/>
 				))	}

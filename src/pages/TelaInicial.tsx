@@ -28,7 +28,7 @@ function TelaInicial() {
 					placeholder="Insira aqui a URL da sua API"
 					value={url}
 					onChange={(e) => setUrl(e.target.value)}
-					className="w-[400px] p-3 rounded-xl bg-gray-200 text-black text-center outline-none input-custom"
+					className="w-100 p-3 rounded-xl bg-gray-200 text-black text-center outline-none input-custom"
 				/>
 
 				<button
