@@ -15,3 +15,5 @@ To run the application, it's important to use a package manager tool such as yar
 Runs the app in the development mode. 
 Open localhost to view it in your browser. 
 The page will reload when you make changes.
+
+URL da API: https://y5klzz3x33bqv3kytn4swkcwji0vlfhw.lambda-url.us-east-1.on.aws
