@@ -1,7 +1,7 @@
 import { useState } from "react";
 interface CardNotas {
-	valorNota: number;
-	onchange: (valor: number, qntde: number) => void;
+	valorNota: string;
+	onchange: (valor: string, qntde: number) => void;
 }
 
 export default function CardNotas({ valorNota, onchange }: CardNotas) {

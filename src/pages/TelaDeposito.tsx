@@ -4,20 +4,23 @@ import BotaoNavegacao from "../components/BotaoNavegacao";
 import NavBar from "../components/NavBar";
 import { useState, useEffect } from "react";
 import getUser from "../services/user";
+import { depositPost, Notas } from "../services/transferencias_service";
+
 
 const notas = [
-	{ valorNota: 2 },
-	{ valorNota: 5 },
-	{ valorNota: 10 },
-	{ valorNota: 20 },
-	{ valorNota: 50 },
-	{ valorNota: 100 },
-	{ valorNota: 200 },
+	{ valorNota: "2" },
+	{ valorNota: "5" },
+	{ valorNota: "10" },
+	{ valorNota: "20" },
+	{ valorNota: "50" },
+	{ valorNota: "100" },
+	{ valorNota: "200" },
 ];
 
 export default function TelaDeposito() {
 	const [user, setUser] = useState<any>();
 	const saldo = user?.current_balance;
+
 	useEffect(() => {
 		const carregaUser = async () => {
 			try {
@@ -30,11 +33,21 @@ export default function TelaDeposito() {
 		carregaUser();
 	}, []);
 
-	const [notasSelecionadas, setNotasSelecionadas] = useState<{
-		[chave: number]: number;
-	}>({});
+	const [notasSelecionadas, setNotasSelecionadas] = useState<Notas>({
+		"2": 0,
+		"5": 0,
+		"10": 0,
+		"20": 0,
+		"50": 0,
+		"100": 0,
+		"200": 0,
+	});
 
-	function atualizarNotas(valor: number, qntde: number) {
+	const enviarDeposito = () => {
+		const resposta = depositPost(notasSelecionadas)
+		console.log(resposta)
+	}
+	function atualizarNotas(valor: string, qntde: number) {
 		setNotasSelecionadas((prev) => {
 			const novo = { ...prev };
 
@@ -74,7 +87,9 @@ export default function TelaDeposito() {
 							nome="Voltar"
 							rota="conta"
 						/>
-						<button className="bg-[#567DB7] text-white text-[48px] w-57.5 h-27.25 rounded-[30px] cursor-pointer">
+						<button
+						className="bg-[#567DB7] text-white text-[48px] w-57.5 h-27.25 rounded-[30px] cursor-pointer"
+						onClick={enviarDeposito}>
 							Depositar
 						</button>
 					</div>
