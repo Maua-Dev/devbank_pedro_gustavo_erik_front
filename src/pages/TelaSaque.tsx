@@ -2,6 +2,8 @@ import CardNotas from "../components/CardNotas";
 import CardQtde from "../components/CardQtde";
 import BotaoNavegacao from "../components/BotaoNavegacao";
 import { useState } from "react";
+import NavBar from "../components/NavBar";
+
 const notas = [
 	{ valorNota: 2 },
 	{ valorNota: 5 },
@@ -38,14 +40,7 @@ function TelaSaque() {
 	);
 		return (
         <div className="bg-[#CBD8DD] w-full h-full">
-          <header className="flex bg-[#567DB7] rounded-b-[60px] w-full h-44.5">
-            <h1 className="flex items-center bg-[#99B3D9] text-white w-120.75 h-30.5 mt-4.75 ml-16 mr-19.25 pl-5.5 pt-2.75 rounded-[30px] text-[48px]">
-              Saldo atual: {0.0}
-            </h1>
-            <h2 className="flex items-center justify-center text-[32px] text-black bg-[#99B3D9] w-200.25 h-30.5 mt-4.75 rounded-[30px]">
-              Selecione as cédulas e a quantidade que você deseja
-            </h2>
-          </header>
+          <NavBar tipo="saque"/>
           <div className="flex flex-row">
             <div className="pt-24.75">
               <div className="flex flex-col gap-20.5 ml-21.5 ">
