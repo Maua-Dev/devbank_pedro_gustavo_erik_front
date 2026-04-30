@@ -2,7 +2,8 @@ import CardQtde from "../components/CardQtde";
 import CardNotas from "../components/CardNotas";
 import BotaoNavegacao from "../components/BotaoNavegacao";
 import NavBar from "../components/NavBar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import getUser from "../services/user";
 
 const notas = [
 	{ valorNota: 2 },
@@ -15,8 +16,20 @@ const notas = [
 ];
 
 export default function TelaDeposito() {
-	
-	const saldo = 1000;
+	const [user, setUser] = useState<any>();
+	const saldo = user?.current_balance;
+	useEffect(() => {
+		const carregaUser = async () => {
+			try {
+				const data = await getUser();
+				setUser(data);
+			} catch (error) {
+				console.error(error);
+			}
+		};
+		carregaUser();
+	}, []);
+
 	const [notasSelecionadas, setNotasSelecionadas] = useState<{
 		[chave: number]: number;
 	}>({});
@@ -42,13 +55,19 @@ export default function TelaDeposito() {
 
 	return (
 		<div className="bg-[#CBD8DD] w-full h-full">
-			<NavBar tipo="deposito"/>
+			<NavBar tipo="deposito" />
 			<div className="flex flex-row">
 				<div className="pt-24.75">
 					<div className="flex flex-col gap-20.5 ml-21.5 ">
-					<CardQtde titulo="Quantidade Saque" total={totalDepositado}/>
-					<CardQtde titulo="Quantidade Final" total={saldo - totalDepositado}/>
-					</div> 
+						<CardQtde
+							titulo="Quantidade Saque"
+							total={totalDepositado}
+						/>
+						<CardQtde
+							titulo="Quantidade Final"
+							total={saldo - totalDepositado}
+						/>
+					</div>
 					<div className="flex gap-16.75 mt-22.75 ml-9.5 mb-7.25">
 						<BotaoNavegacao
 							className="bg-[#567DB7] text-white text-[48px] w-57.5 h-27.25 rounded-[30px]"

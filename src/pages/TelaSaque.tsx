@@ -1,8 +1,9 @@
 import CardNotas from "../components/CardNotas";
 import CardQtde from "../components/CardQtde";
 import BotaoNavegacao from "../components/BotaoNavegacao";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
+import getUser from "../services/user";
 
 const notas = [
 	{ valorNota: 2 },
@@ -15,7 +16,21 @@ const notas = [
 ];
 
 function TelaSaque() {
-	const saldo = 1000;
+  const [user, setUser] = useState<any>();
+	const saldo = user?.current_balance
+  
+	useEffect(() => {
+		const carregaUser = async () => {
+			try {
+				const data = await getUser();
+				setUser(data);
+			} catch (error) {
+				console.error(error);
+			}
+		};
+		carregaUser();
+	}, []);
+
 	const [notasSelecionadas, setNotasSelecionadas] = useState<{
 		[chave: number]: number;
 	}>({});

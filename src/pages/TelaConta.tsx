@@ -1,19 +1,7 @@
-import { useEffect, useState } from "react";
 import BotaoNavegacao from "../components/BotaoNavegacao";
 import NavBar from "../components/NavBar";
 
-
 function TelaConta() {
-	const [saldo, setSaldo] = useState(0);
-
-	useEffect(() => {
-		const apiUrl = localStorage.getItem("api_url");
-
-		fetch(apiUrl + "/")
-			.then((res) => res.json())
-			.then((data) => setSaldo(data.balance));
-	}, []);
-
 	const rotas = [
 		{
 			nome: "Sacar",
