@@ -60,7 +60,7 @@ export default function TelaDeposito() {
 				<div className="pt-24.75">
 					<div className="flex flex-col gap-20.5 ml-21.5 ">
 						<CardQtde
-							titulo="Quantidade Saque"
+							titulo="Quantidade Deposito"
 							total={totalDepositado}
 						/>
 						<CardQtde
