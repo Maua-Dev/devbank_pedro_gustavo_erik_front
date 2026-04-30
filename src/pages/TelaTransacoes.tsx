@@ -42,7 +42,7 @@ export default function TelaTransacoes() {
 					<CardTransacoes
 						key={index}
 						tipo={transacao.type}
-						valor={transacao.current_balance}
+						valor={transacao.value}
 					/>
 				))}
 			</div>
