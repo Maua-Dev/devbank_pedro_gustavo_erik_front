@@ -1,22 +1,24 @@
+import { useEffect, useState } from "react";
 import BotaoNavegacao from "../components/BotaoNavegacao";
 import CardTransacoes from "../components/CardTransacoes";
 import NavBar from "../components/NavBar";
+import { getHistory } from "../services/transferencias_service";
 
 export default function TelaTransacoes() {
-	const transacoes = [
-		{
-			tipo: "deposit",
-			valor: 1000.0,
-		},
-		{
-			tipo: "deposit",
-			valor: 500.65,
-		},
-		{
-			tipo: "withdraw",
-			valor: 500.5,
-		},
-	];
+	const [transacoes, setTransacoes] = useState<any[]>([]);
+
+	useEffect(() => {
+		const carregaTransacoes = async () => {
+			try {
+				const data = await getHistory();
+				setTransacoes(data.all_transactions);
+			} catch (error) {
+				console.error(error);
+			}
+		};
+		carregaTransacoes();
+	}, []);
+
 	const botoesNav = [
 		{
 			nome: "Voltar",
@@ -39,8 +41,8 @@ export default function TelaTransacoes() {
 				{transacoes.map((transacao, index) => (
 					<CardTransacoes
 						key={index}
-						tipo={transacao.tipo}
-						valor={transacao.valor}
+						tipo={transacao.type}
+						valor={transacao.current_balance}
 					/>
 				))}
 			</div>
