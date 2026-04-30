@@ -6,17 +6,6 @@ import { useState, useEffect } from "react";
 import getUser from "../services/user";
 import { depositPost, Notas } from "../services/transferencias_service";
 
-
-const notas = [
-	{ valorNota: "2" },
-	{ valorNota: "5" },
-	{ valorNota: "10" },
-	{ valorNota: "20" },
-	{ valorNota: "50" },
-	{ valorNota: "100" },
-	{ valorNota: "200" },
-];
-
 export default function TelaDeposito() {
 	const [user, setUser] = useState<any>();
 	const saldo = user?.current_balance;
@@ -44,10 +33,10 @@ export default function TelaDeposito() {
 	});
 
 	const enviarDeposito = () => {
-		const resposta = depositPost(notasSelecionadas)
-		console.log(resposta)
-	}
-	function atualizarNotas(valor: string, qntde: number) {
+		const resposta = depositPost(notasSelecionadas);
+		console.log(resposta);
+	};
+	function atualizarNotas(valor: keyof Notas, qntde: number) {
 		setNotasSelecionadas((prev) => {
 			const novo = { ...prev };
 
@@ -78,7 +67,7 @@ export default function TelaDeposito() {
 						/>
 						<CardQtde
 							titulo="Quantidade Final"
-							total={saldo - totalDepositado}
+							total={Number.isNaN(saldo + totalDepositado) ? 0 : saldo + totalDepositado}
 						/>
 					</div>
 					<div className="flex gap-16.75 mt-22.75 ml-9.5 mb-7.25">
@@ -88,18 +77,19 @@ export default function TelaDeposito() {
 							rota="conta"
 						/>
 						<button
-						className="bg-[#567DB7] text-white text-[48px] w-57.5 h-27.25 rounded-[30px] cursor-pointer"
-						onClick={enviarDeposito}>
+							className="bg-[#567DB7] text-white text-[48px] w-57.5 h-27.25 rounded-[30px] cursor-pointer"
+							onClick={enviarDeposito}
+						>
 							Depositar
 						</button>
 					</div>
 				</div>
 				<div className="mt-6.5 ml-64">
 					<div className="grid grid-cols-2 gap-9 just">
-						{notas.map((nota) => (
+						{Object.entries(notasSelecionadas).map(([valor]) => (
 							<CardNotas
-								key={nota.valorNota}
-								valorNota={nota.valorNota}
+								key={valor}
+								valorNota={valor as keyof Notas}
 								onchange={atualizarNotas}
 							/>
 						))}

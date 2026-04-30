@@ -1,4 +1,3 @@
-import axios from "axios";
 import api from "./api";
 
 export type Notas = {
@@ -15,18 +14,24 @@ type TransactionsResponse = {
 	current_balance: number;
 	timestamp: number;
 };
+type TransactionsReponseError = {
+	"detail": string
+}
 
 export const depositPost = async (
 	data: Notas,
-): Promise<TransactionsResponse> => {
-	const response = await axios.post<TransactionsResponse>("/", data);
+): Promise<TransactionsResponse | TransactionsReponseError> => {
+	const response = await api.post<TransactionsResponse | TransactionsReponseError>("/deposit", data);
+	window.location.reload();
+
 	return response.data;
-}
+};
 
 export const withdrawPost = async (
 	data: Notas,
-): Promise<TransactionsResponse> => {
-	const response = await axios.post<TransactionsResponse>("/", data);
+): Promise<TransactionsResponse | TransactionsReponseError> => {
+	const response = await api.post<TransactionsResponse | TransactionsReponseError>("/withdraw", data);
+	window.location.reload();
 	return response.data;
 };
 

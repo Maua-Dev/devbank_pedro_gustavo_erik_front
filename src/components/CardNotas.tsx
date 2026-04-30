@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { Notas } from "../services/transferencias_service";
+
 interface CardNotas {
-	valorNota: string;
-	onchange: (valor: string, qntde: number) => void;
+	valorNota: keyof Notas;
+	onchange: (valor: keyof Notas, qntde: number) => void;
 }
 
 export default function CardNotas({ valorNota, onchange }: CardNotas) {

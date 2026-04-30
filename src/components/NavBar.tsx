@@ -23,7 +23,7 @@ export default function NavBar({ tipo }: NavBar) {
 	const name = user?.name;
 	const agency = user?.agency;
 	const account = user?.account;
-	const current_balance = user?.current_balance;
+	const current_balance = Number.isNaN(user?.current_balance) ? 0 : user?.current_balance;
 	
 	if (tipo === "deposito" || tipo === "saque") {
 		return (

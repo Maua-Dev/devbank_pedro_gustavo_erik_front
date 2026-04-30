@@ -4,21 +4,12 @@ import BotaoNavegacao from "../components/BotaoNavegacao";
 import { useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import getUser from "../services/user";
-
-const notas = [
-	{ valorNota: 2 },
-	{ valorNota: 5 },
-	{ valorNota: 10 },
-	{ valorNota: 20 },
-	{ valorNota: 50 },
-	{ valorNota: 100 },
-	{ valorNota: 200 },
-];
+import { withdrawPost, Notas } from "../services/transferencias_service";
 
 function TelaSaque() {
-  const [user, setUser] = useState<any>();
-	const saldo = user?.current_balance
-  
+	const [user, setUser] = useState<any>();
+	const saldo = user?.current_balance;
+
 	useEffect(() => {
 		const carregaUser = async () => {
 			try {
@@ -31,11 +22,21 @@ function TelaSaque() {
 		carregaUser();
 	}, []);
 
-	const [notasSelecionadas, setNotasSelecionadas] = useState<{
-		[chave: number]: number;
-	}>({});
+	const [notasSelecionadas, setNotasSelecionadas] = useState<Notas>({
+		"2": 0,
+		"5": 0,
+		"10": 0,
+		"20": 0,
+		"50": 0,
+		"100": 0,
+		"200": 0,
+	});
 
-	function atualizarNotas(valor: number, qntde: number) {
+	const enviarSaque = () => {
+		const resposta = withdrawPost(notasSelecionadas);
+		console.log(resposta);
+	};
+	function atualizarNotas(valor: keyof Notas, qntde: number) {
 		setNotasSelecionadas((prev) => {
 			const novo = { ...prev };
 
@@ -53,40 +54,49 @@ function TelaSaque() {
 			totalSaque + Number.parseInt(valor) * qnde,
 		0,
 	);
-		return (
-        <div className="bg-[#CBD8DD] w-full h-full">
-          <NavBar tipo="saque"/>
-          <div className="flex flex-row">
-            <div className="pt-24.75">
-              <div className="flex flex-col gap-20.5 ml-21.5 ">
-              <CardQtde titulo="Quantidade Saque" total={totalSaque}/>
-              <CardQtde titulo="Quantidade Final" total={saldo - totalSaque}/>
-              </div>
-              <div className="flex gap-16.75 mt-22.75 ml-9.5 mb-7.25">
-                <BotaoNavegacao
-                  className="bg-[#567DB7] text-white text-[48px] w-57.5 h-27.25 rounded-[30px]"
-                  nome="Voltar"
-                  rota="conta"
-                />
-                <button className="bg-[#567DB7] text-white text-[48px] w-57.5 h-27.25 rounded-[30px] cursor-pointer">
-                  Retirar
-                </button>
-              </div>
-            </div>
-            <div className="mt-6.5 ml-64">
-              <div className="grid grid-cols-2 gap-9 just">
-                {notas.map((nota) => (
-                  <CardNotas
-                    key={nota.valorNota}
-                    valorNota={nota.valorNota}
-                    onchange={atualizarNotas}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      );
+	return (
+		<div className="bg-[#CBD8DD] w-full h-full">
+			<NavBar tipo="saque" />
+			<div className="flex flex-row">
+				<div className="pt-24.75">
+					<div className="flex flex-col gap-20.5 ml-21.5 ">
+						<CardQtde
+							titulo="Quantidade Saque"
+							total={-totalSaque}
+						/>
+						<CardQtde
+							titulo="Quantidade Final"
+							total={saldo - totalSaque}
+						/>
+					</div>
+					<div className="flex gap-16.75 mt-22.75 ml-9.5 mb-7.25">
+						<BotaoNavegacao
+							className="bg-[#567DB7] text-white text-[48px] w-57.5 h-27.25 rounded-[30px]"
+							nome="Voltar"
+							rota="conta"
+						/>
+						<button
+							onClick={enviarSaque}
+							className="bg-[#567DB7] text-white text-[48px] w-57.5 h-27.25 rounded-[30px] cursor-pointer"
+						>
+							Retirar
+						</button>
+					</div>
+				</div>
+				<div className="mt-6.5 ml-64">
+					<div className="grid grid-cols-2 gap-9 just">
+						{Object.entries(notasSelecionadas).map(([valor]) => (
+							<CardNotas
+								key={valor}
+								valorNota={valor as keyof Notas}
+								onchange={atualizarNotas}
+							/>
+						))}
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 }
 
 export default TelaSaque;
