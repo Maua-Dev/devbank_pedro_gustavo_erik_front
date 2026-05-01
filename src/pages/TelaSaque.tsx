@@ -6,7 +6,7 @@ import NavBar from "../components/NavBar";
 import getUser from "../services/user";
 import { withdrawPost, Notas } from "../services/transferencias_service";
 
-function TelaSaque() {
+export default function TelaSaque() {
 	const [user, setUser] = useState<any>();
 	const saldo = user?.current_balance;
 
@@ -55,57 +55,47 @@ function TelaSaque() {
 		0,
 	);
 	return (
-		<div className="bg-[#CBD8DD] w-full min-h-screen flex flex-col">
-			<NavBar tipo="saque" />
-			<div className="flex flex-row">
-				<div className="pt-24.75">
-					<div className="flex flex-col gap-20.5 ml-21.5 ">
-						<CardQtde
-							titulo="Quantidade Saque"
-							total={-totalSaque}
-						/>
-						<CardQtde
-							titulo="Quantidade Final"
-							total={saldo - totalSaque}
-						/>
-					</div>
-					
-				</div>
-				<div className="mt-6.5 ml-64">
-					<div className="grid grid-cols-2 gap-9 just">
-						{Object.entries(notasSelecionadas).map(([valor]) => (
-							<CardNotas
-								key={valor}
-								valorNota={valor as keyof Notas}
-								onchange={atualizarNotas}
-							/>
-						))}
-					</div>
-				</div>
-			</div>
-
-			{/*Posicionamento dos botões fora da div principal*/}
-			<div className="flex justify-center  mb-6">
-			<div className="flex gap-4">
-				<div className="w-[140px]">
-				<BotaoNavegacao
-					className="w-full bg-[#567DB7] text-white py-3 rounded-xl text-lg"
-					nome="Voltar"
-					rota="conta"
+		<div className="bg-[#CBD8DD] min-w-screen min-h-screen overflow-x-hidden">
+			<NavBar tipo="deposito" />
+			<div className="flex flex-row flex-wrap justify-center items-center gap-20.5 md:mt-5 ">
+				<CardQtde
+					titulo="Quantidade Deposito:"
+					total={totalSaque}
 				/>
-				</div>
+				<CardQtde
+					titulo="Quantidade Final:"
+					total={
+						Number.isNaN(saldo + totalSaque)
+							? 0
+							: saldo + totalSaque
+					}
+				/>
+			</div>
+			<div className="flex flex-wrap flex-row gap-15.75 pl-5 pt-7">
+				{Object.entries(notasSelecionadas).map(([valor]) => (
+					<CardNotas
+						key={valor}
+						valorNota={valor as keyof Notas}
+						onchange={atualizarNotas}
+					/>
+				))}
+			</div>
+			<footer className="flex justify-center gap-4 items-end md:pt-16 w-full">
+					<div className="w-35">
+						<BotaoNavegacao
+							className="w-full bg-[#567DB7] text-white py-3 rounded-xl text-lg"
+							nome="Voltar"
+							rota="conta"
+						/>
+					</div>
 
-				<button
-				onClick={enviarSaque}
-				className="w-[140px] bg-[#567DB7] text-white py-3 rounded-xl text-lg"
-				>
-				Retirar
-				</button>
-
-		</div>
-		</div>
+					<button
+						onClick={enviarSaque}
+						className="w-35 bg-[#567DB7] text-white py-3 rounded-xl text-lg cursor-pointer"
+					>
+						Retirar
+					</button>
+			</footer>
 		</div>
 	);
 }
-
-export default TelaSaque;

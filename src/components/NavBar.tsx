@@ -27,18 +27,18 @@ export default function NavBar({ tipo }: NavBar) {
 	
 	if (tipo === "deposito" || tipo === "saque") {
 		return (
-			<header className="flex bg-[#567DB7] rounded-b-[60px] w-full h-44.5">
-				<div className="flex flex-col justify-center bg-[#99B3D9] text-white w-58.75 h-30.5 mt-4.75 ml-9 mr-26.25 pl-3.25 rounded-[30px] gap-1.25">
+			<header className="flex bg-[#567DB7] rounded-b-[60px] w-full h-30">
+				<div className="flex flex-col justify-center bg-[#99B3D9] text-white text-1x2 w-58.75 h-24 mt-2 ml-9 mr-26.25 pl-3.25 rounded-[30px] gap-0.5">
 					<p>Nome: {name}</p>
 					<p>Conta: {agency}</p>
 					<p>Agência: {account}</p>
 				</div>
-				<h1 className="flex items-center bg-[#99B3D9] text-white w-88.5 h-30.5 mt-4.75 ml-16 mr-9.5 pl-5.5 pt-2.75 rounded-[30px] text-[32px]">
+				<p className="flex items-center bg-[#99B3D9] text-white md:w-88.5 h-20 mt-4.75 ml-16 mr-9.5 pl-5.5 pt-2.75 rounded-[30px] text-[32px]">
 					Saldo atual: R$ {current_balance}
-				</h1>
-				<h2 className="flex items-center justify-center text-[24px] text-black bg-[#99B3D9] w-153 h-30.5 mt-4.75 rounded-[30px]">
+				</p>
+				<p className="flex items-center justify-center text-2xl text-black bg-[#99B3D9] md:w-153 md:h-20 mt-4.75 rounded-[30px]">
 					Selecione as cédulas e a quantidade que você deseja
-				</h2>
+				</p>
 			</header>
 		);
 	} else if (tipo === "historico") {

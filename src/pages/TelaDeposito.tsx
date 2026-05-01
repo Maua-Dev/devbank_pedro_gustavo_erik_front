@@ -56,46 +56,47 @@ export default function TelaDeposito() {
 	);
 
 	return (
-		<div className="bg-[#CBD8DD] w-full h-full">
+		<div className="bg-[#CBD8DD] min-w-screen min-h-screen overflow-x-hidden">
 			<NavBar tipo="deposito" />
-			<div className="flex flex-row">
-				<div className="pt-24.75">
-					<div className="flex flex-col gap-20.5 ml-21.5 ">
-						<CardQtde
-							titulo="Quantidade Deposito"
-							total={totalDepositado}
-						/>
-						<CardQtde
-							titulo="Quantidade Final"
-							total={Number.isNaN(saldo + totalDepositado) ? 0 : saldo + totalDepositado}
-						/>
-					</div>
-					<div className="flex gap-16.75 mt-22.75 ml-9.5 mb-7.25">
+			<div className="flex flex-row flex-wrap justify-center items-center gap-20.5 md:mt-5 ">
+				<CardQtde
+					titulo="Quantidade Deposito:"
+					total={totalDepositado}
+				/>
+				<CardQtde
+					titulo="Quantidade Final:"
+					total={
+						Number.isNaN(saldo + totalDepositado)
+							? 0
+							: saldo + totalDepositado
+					}
+				/>
+			</div>
+			<div className="flex flex-wrap flex-row gap-15.75 pl-5 pt-7">
+				{Object.entries(notasSelecionadas).map(([valor]) => (
+					<CardNotas
+						key={valor}
+						valorNota={valor as keyof Notas}
+						onchange={atualizarNotas}
+					/>
+				))}
+			</div>
+			<footer className="flex justify-center gap-4 items-end md:pt-16 w-full">
+					<div className="w-35">
 						<BotaoNavegacao
-							className="bg-[#567DB7] text-white text-[48px] w-57.5 h-27.25 rounded-[30px]"
+							className="w-full bg-[#567DB7] text-white py-3 rounded-xl text-lg"
 							nome="Voltar"
 							rota="conta"
 						/>
-						<button
-							className="bg-[#567DB7] text-white text-[48px] w-57.5 h-27.25 rounded-[30px] cursor-pointer"
-							onClick={enviarDeposito}
-						>
-							Depositar
-						</button>
 					</div>
-				</div>
-				<div className="mt-6.5 ml-64">
-					<div className="grid grid-cols-2 gap-9 just">
-						{Object.entries(notasSelecionadas).map(([valor]) => (
-							<CardNotas
-								key={valor}
-								valorNota={valor as keyof Notas}
-								onchange={atualizarNotas}
-							/>
-						))}
-					</div>
-				</div>
-			</div>
+
+					<button
+						onClick={enviarDeposito}
+						className="w-35 bg-[#567DB7] text-white py-3 rounded-xl text-lg cursor-pointer"
+					>
+						Retirar
+					</button>
+			</footer>
 		</div>
 	);
 }
