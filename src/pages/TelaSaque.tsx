@@ -55,7 +55,7 @@ function TelaSaque() {
 		0,
 	);
 	return (
-		<div className="bg-[#CBD8DD] w-full h-full">
+		<div className="bg-[#CBD8DD] w-full min-h-screen flex flex-col">
 			<NavBar tipo="saque" />
 			<div className="flex flex-row">
 				<div className="pt-24.75">
@@ -69,19 +69,7 @@ function TelaSaque() {
 							total={saldo - totalSaque}
 						/>
 					</div>
-					<div className="flex gap-16.75 mt-22.75 ml-9.5 mb-7.25">
-						<BotaoNavegacao
-							className="bg-[#567DB7] text-white text-[48px] w-57.5 h-27.25 rounded-[30px]"
-							nome="Voltar"
-							rota="conta"
-						/>
-						<button
-							onClick={enviarSaque}
-							className="bg-[#567DB7] text-white text-[48px] w-57.5 h-27.25 rounded-[30px] cursor-pointer"
-						>
-							Retirar
-						</button>
-					</div>
+					
 				</div>
 				<div className="mt-6.5 ml-64">
 					<div className="grid grid-cols-2 gap-9 just">
@@ -95,6 +83,27 @@ function TelaSaque() {
 					</div>
 				</div>
 			</div>
+
+			{/*Posicionamento dos botões fora da div principal*/}
+			<div className="flex justify-center  mb-6">
+			<div className="flex gap-4">
+				<div className="w-[140px]">
+				<BotaoNavegacao
+					className="w-full bg-[#567DB7] text-white py-3 rounded-xl text-lg"
+					nome="Voltar"
+					rota="conta"
+				/>
+				</div>
+
+				<button
+				onClick={enviarSaque}
+				className="w-[140px] bg-[#567DB7] text-white py-3 rounded-xl text-lg"
+				>
+				Retirar
+				</button>
+
+		</div>
+		</div>
 		</div>
 	);
 }
