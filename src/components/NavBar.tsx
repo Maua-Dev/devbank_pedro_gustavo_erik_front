@@ -27,16 +27,16 @@ export default function NavBar({ tipo }: NavBar) {
 	
 	if (tipo === "deposito" || tipo === "saque") {
 		return (
-			<header className="flex bg-[#567DB7] rounded-b-[60px] w-full h-30">
-				<div className="flex flex-col justify-center bg-[#99B3D9] text-white text-1x2 w-58.75 h-24 mt-2 ml-9 mr-26.25 pl-3.25 rounded-[30px] gap-0.5">
+			<header className="flex flex-col md:flex-row items-center justify-between gap-4 bg-[#567DB7] rounded-b-[40px] w-full px-4 py-4">
+				<div className="bg-[#99B3D9] text-white rounded-[20px] p-3 w-full md:w-auto text-sm md:text-base">
 					<p>Nome: {name}</p>
 					<p>Conta: {agency}</p>
 					<p>Agência: {account}</p>
 				</div>
-				<p className="flex items-center bg-[#99B3D9] text-white md:w-88.5 h-20 mt-4.75 ml-16 mr-9.5 pl-5.5 pt-2.75 rounded-[30px] text-[32px]">
+				<p className="bg-[#99B3D9] text-white rounded-[20px] px-4 py-3 text-center text-lg md:text-2xl w-full md:w-auto">
 					Saldo atual: R$ {current_balance}
 				</p>
-				<p className="flex items-center justify-center text-2xl text-black bg-[#99B3D9] md:w-153 md:h-20 mt-4.75 rounded-[30px]">
+				<p className="bg-[#99B3D9] text-black rounded-[20px] px-4 py-3 text-center text-sm md:text-base w-full md:w-auto max-w-[400px]">
 					Selecione as cédulas e a quantidade que você deseja
 				</p>
 			</header>
