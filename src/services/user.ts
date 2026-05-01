@@ -1,14 +1,11 @@
 import api from "./api";
-
-export default async function getUser() {
+export type User = {
+	name: string,
+	agency: string,
+	account: string,
+	current_balance: number
+}
+export default async function getUser():Promise<User> {
 	const response = await api.get("/");
-
-	const { name, agency, account, current_balance } = response.data;
-
-	return {
-		name,
-		agency,
-		account,
-		current_balance,
-	};
+	return response.data
 }

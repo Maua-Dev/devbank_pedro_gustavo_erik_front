@@ -3,12 +3,12 @@ import CardNotas from "../components/CardNotas";
 import BotaoNavegacao from "../components/BotaoNavegacao";
 import NavBar from "../components/NavBar";
 import { useState, useEffect } from "react";
-import getUser from "../services/user";
+import getUser, { User } from "../services/user";
 import { depositPost, Notas } from "../services/transferencias_service";
 
 export default function TelaDeposito() {
-	const [user, setUser] = useState<any>();
-	const saldo = user?.current_balance;
+	const [user, setUser] = useState<User | null>(null);
+	const [saldo, setSaldo] = useState(user?.current_balance ?? 0);
 
 	useEffect(() => {
 		const carregaUser = async () => {
@@ -32,19 +32,21 @@ export default function TelaDeposito() {
 		"200": 0,
 	});
 
-	const enviarDeposito = () => {
-		const resposta = depositPost(notasSelecionadas);
-		console.log(resposta);
-	};
+	async function enviarDeposito() {
+		const resposta = await depositPost(notasSelecionadas);
+
+		if ("error" in resposta) {
+			console.log(resposta.error);
+		} else {
+			setSaldo(resposta.current_balance);
+			console.log(resposta);
+		}
+	}
+
 	function atualizarNotas(valor: keyof Notas, qntde: number) {
 		setNotasSelecionadas((prev) => {
 			const novo = { ...prev };
-
-			if (qntde === 0) {
-				delete novo[valor];
-			} else {
-				novo[valor] = qntde;
-			}
+			novo[valor] = qntde;
 			return novo;
 		});
 	}
@@ -67,7 +69,7 @@ export default function TelaDeposito() {
 					titulo="Quantidade Final:"
 					total={
 						Number.isNaN(saldo + totalDepositado)
-							? 0
+							? saldo
 							: saldo + totalDepositado
 					}
 				/>
@@ -75,27 +77,27 @@ export default function TelaDeposito() {
 			<div className="flex flex-wrap flex-row gap-15.75 pl-5 pt-7">
 				{Object.entries(notasSelecionadas).map(([valor]) => (
 					<CardNotas
-						key={valor}
+						key={valor as keyof Notas}
 						valorNota={valor as keyof Notas}
 						onchange={atualizarNotas}
 					/>
 				))}
 			</div>
 			<footer className="flex justify-center gap-4 items-end md:pt-16 w-full">
-					<div className="w-35">
-						<BotaoNavegacao
-							className="w-full bg-[#567DB7] text-white py-3 rounded-xl text-lg"
-							nome="Voltar"
-							rota="conta"
-						/>
-					</div>
+				<div className="w-35">
+					<BotaoNavegacao
+						className="w-full bg-[#567DB7] text-white py-3 rounded-xl text-lg"
+						nome="Voltar"
+						rota="conta"
+					/>
+				</div>
 
-					<button
-						onClick={enviarDeposito}
-						className="w-35 bg-[#567DB7] text-white py-3 rounded-xl text-lg cursor-pointer"
-					>
-						Retirar
-					</button>
+				<button
+					onClick={enviarDeposito}
+					className="w-35 bg-[#567DB7] text-white py-3 rounded-xl text-lg cursor-pointer"
+				>
+					Retirar
+				</button>
 			</footer>
 		</div>
 	);
