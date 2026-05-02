@@ -8,7 +8,7 @@ import { depositPost, Notas } from "../services/transferencias_service";
 
 export default function TelaDeposito() {
 	const [user, setUser] = useState<User | null>(null);
-	const [saldo, setSaldo] = useState(user?.current_balance ?? 0);
+	const [saldo, setSaldo] = useState(0);
 
 	useEffect(() => {
 		const carregaUser = async () => {
@@ -21,7 +21,11 @@ export default function TelaDeposito() {
 		};
 		carregaUser();
 	}, []);
-
+	useEffect(() => {
+		if (user) {
+			setSaldo(user.current_balance);
+		}
+	}, [user]);
 	const [notasSelecionadas, setNotasSelecionadas] = useState<Notas>({
 		"2": 0,
 		"5": 0,
@@ -39,6 +43,15 @@ export default function TelaDeposito() {
 			console.log(resposta.error);
 		} else {
 			setSaldo(resposta.current_balance);
+			setNotasSelecionadas({
+				"2": 0,
+				"5": 0,
+				"10": 0,
+				"20": 0,
+				"50": 0,
+				"100": 0,
+				"200": 0,
+			});
 			console.log(resposta);
 		}
 	}
@@ -59,8 +72,8 @@ export default function TelaDeposito() {
 
 	return (
 		<div className="bg-[#CBD8DD] w-screen min-h-screen overflow-x-hidden">
-			<NavBar tipo="deposito" />
-	
+			<NavBar tipo="deposito" saldo={saldo} />
+
 			{/* cards */}
 			<div className="flex flex-row justify-center gap-3 mt-4 px-2">
 				<CardQtde
@@ -76,37 +89,36 @@ export default function TelaDeposito() {
 					}
 				/>
 			</div>
-	
+
 			{/* notas */}
 			<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8 px-4 justify-items-center">
 				{Object.entries(notasSelecionadas).map(([valor]) => (
 					<CardNotas
 						key={valor as keyof Notas}
+						qntdNotas={notasSelecionadas[valor as keyof Notas]}
 						valorNota={valor as keyof Notas}
 						onchange={atualizarNotas}
 					/>
 				))}
 			</div>
-	
+
 			{/* botões */}
 			<footer className="flex justify-center gap-4 mt-21 pb-6">
-				<div className="w-[140px]">
+				<div className="w-35">
 					<BotaoNavegacao
 						className="w-full bg-[#567DB7] text-white py-3 rounded-xl text-lg"
 						nome="Voltar"
 						rota="conta"
 					/>
 				</div>
-	
+
 				<button
 					onClick={enviarDeposito}
-					className="w-[140px] bg-[#567DB7] text-white py-3 rounded-xl text-lg cursor-pointer"
+					className="w-35 bg-[#567DB7] text-white py-3 rounded-xl text-lg cursor-pointer"
 				>
 					Depositar
 				</button>
 			</footer>
-	
 		</div>
-		
 	);
 }

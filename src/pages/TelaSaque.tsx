@@ -4,13 +4,12 @@ import BotaoNavegacao from "../components/BotaoNavegacao";
 import { useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import ModalErro from "../components/ModalErro";
-import getUser from "../services/user";
 import { withdrawPost, Notas } from "../services/transferencias_service";
-
+import getUser, { User } from "../services/user";
 
 export default function TelaSaque() {
-	const [user, setUser] = useState<any>();
-	const saldo = user?.current_balance;
+	const [user, setUser] = useState<User | null>();
+	const [saldo, setSaldo] = useState(0);
 
 	useEffect(() => {
 		const carregaUser = async () => {
@@ -23,6 +22,11 @@ export default function TelaSaque() {
 		};
 		carregaUser();
 	}, []);
+	useEffect(() => {
+		if (user) {
+			setSaldo(user.current_balance);
+		}
+	}, [user]);
 
 	const [notasSelecionadas, setNotasSelecionadas] = useState<Notas>({
 		"2": 0,
@@ -37,14 +41,23 @@ export default function TelaSaque() {
 	const [erro, setErro] = useState("");
 
 	const enviarSaque = () => {
-	if (totalSaque > saldo) {
-		setErro("Saldo insuficiente para transação");
-		return;
-	}
+		if (totalSaque > saldo) {
+			setErro("Saldo insuficiente para transação");
+			return;
+		}
 
-	const resposta = withdrawPost(notasSelecionadas);
-	console.log(resposta);
-};
+		const resposta = withdrawPost(notasSelecionadas);
+		setNotasSelecionadas({
+			"2": 0,
+			"5": 0,
+			"10": 0,
+			"20": 0,
+			"50": 0,
+			"100": 0,
+			"200": 0,
+		});
+		console.log(resposta);
+	};
 	function atualizarNotas(valor: keyof Notas, qntde: number) {
 		setNotasSelecionadas((prev) => {
 			const novo = { ...prev };
@@ -64,61 +77,53 @@ export default function TelaSaque() {
 		0,
 	);
 	return (
-	<div className="bg-[#CBD8DD] w-screen min-h-screen overflow-x-hidden">
-		<NavBar tipo="saque" />
+		<div className="bg-[#CBD8DD] w-screen min-h-screen overflow-x-hidden">
+			<NavBar tipo="saque" saldo={saldo} />
 
-		{/* cards */}
-		<div className="flex flex-row justify-center gap-3 mt-4 px-2">
-			<CardQtde
-				titulo="Quantidade a Sacar:"
-				total={totalSaque}
-			/>
-			<CardQtde
-				titulo="Quantidade Final:"
-				total={
-					Number.isNaN(saldo + totalSaque)
-						? 0
-						: saldo + totalSaque
-				}
-			/>
-		</div>
-
-		{/* notas */}
-		<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8 px-4 justify-items-center">
-			{Object.entries(notasSelecionadas).map(([valor]) => (
-				<CardNotas
-					key={valor}
-					valorNota={valor as keyof Notas}
-					onchange={atualizarNotas}
-				/>
-			))}
-		</div>
-
-		{/* botões */}
-		<footer className="flex justify-center gap-4 mt-21 pb-6">
-			<div className="w-[140px]">
-				<BotaoNavegacao
-					className="w-full bg-[#567DB7] text-white py-3 rounded-xl text-lg"
-					nome="Voltar"
-					rota="conta"
+			{/* cards */}
+			<div className="flex flex-row justify-center gap-3 mt-4 px-2">
+				<CardQtde titulo="Quantidade a Sacar:" total={totalSaque} />
+				<CardQtde
+					titulo="Quantidade Final:"
+					total={
+						Number.isNaN(saldo - totalSaque)
+							? 0
+							: saldo - totalSaque
+					}
 				/>
 			</div>
 
-			<button
-				onClick={enviarSaque}
-				className="w-[140px] bg-[#567DB7] text-white py-3 rounded-xl text-lg cursor-pointer"
-			>
-				Retirar
-			</button>
-		</footer>
+			{/* notas */}
+			<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8 px-4 justify-items-center">
+				{Object.entries(notasSelecionadas).map(([valor]) => (
+					<CardNotas
+						key={valor}
+						qntdNotas={notasSelecionadas[valor as keyof Notas]}
+						valorNota={valor as keyof Notas}
+						onchange={atualizarNotas}
+					/>
+				))}
+			</div>
 
-		{erro && (
-			<ModalErro
-				mensagem={erro}
-				onClose={() => setErro("")}
-	/>
-		)}
-	</div>
-	
-);
+			{/* botões */}
+			<footer className="flex justify-center gap-4 mt-21 pb-6">
+				<div className="w-35">
+					<BotaoNavegacao
+						className="w-full bg-[#567DB7] text-white py-3 rounded-xl text-lg"
+						nome="Voltar"
+						rota="conta"
+					/>
+				</div>
+
+				<button
+					onClick={enviarSaque}
+					className="w-35 bg-[#567DB7] text-white py-3 rounded-xl text-lg cursor-pointer"
+				>
+					Retirar
+				</button>
+			</footer>
+
+			{erro && <ModalErro mensagem={erro} onClose={() => setErro("")} />}
+		</div>
+	);
 }

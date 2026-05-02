@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import getUser from "../services/user";
 
 interface NavBar {
-	tipo: string;
+	saldo?: number,
+	tipo: string,
 }
 
-export default function NavBar({ tipo }: NavBar) {
+export default function NavBar({ tipo, saldo }: NavBar) {
 	const [user, setUser] = useState<any>();
 
 	useEffect(() => {
@@ -34,9 +35,9 @@ export default function NavBar({ tipo }: NavBar) {
 					<p>Agência: {account}</p>
 				</div>
 				<p className="bg-[#99B3D9] text-white rounded-[20px] px-4 py-3 text-center text-lg md:text-2xl w-full md:w-auto">
-					Saldo atual: R$ {current_balance}
+					Saldo atual: R$ {saldo}
 				</p>
-				<p className="bg-[#99B3D9] text-black rounded-[20px] px-4 py-3 text-center text-sm md:text-base w-full md:w-auto max-w-[400px]">
+				<p className="bg-[#99B3D9] text-black rounded-[20px] px-4 py-3 text-center text-sm md:text-base w-full md:w-auto max-w-100">
 					Selecione as cédulas e a quantidade que você deseja
 				</p>
 			</header>
