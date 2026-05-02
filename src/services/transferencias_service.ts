@@ -20,18 +20,20 @@ type TransactionsReponseError = {
 
 export const depositPost = async (
 	data: Notas,
-): Promise<TransactionsResponse | TransactionsReponseError> => {
-	const response = await api.post<TransactionsResponse | TransactionsReponseError>("/deposit", data);
-	window.location.reload();
-
+): Promise<TransactionsResponse> => {
+	try {
+	const response = await api.post<TransactionsResponse>("/deposit", data);
 	return response.data;
+	} catch(error){
+		console.error(error)
+		throw error
+	}
 };
 
 export const withdrawPost = async (
 	data: Notas,
 ): Promise<TransactionsResponse | TransactionsReponseError> => {
 	const response = await api.post<TransactionsResponse | TransactionsReponseError>("/withdraw", data);
-	window.location.reload();
 	return response.data;
 };
 
