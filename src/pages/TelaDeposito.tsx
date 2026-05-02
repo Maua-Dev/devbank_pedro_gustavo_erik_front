@@ -56,11 +56,13 @@ export default function TelaDeposito() {
 	);
 
 	return (
-		<div className="bg-[#CBD8DD] min-w-screen min-h-screen overflow-x-hidden">
+		<div className="bg-[#CBD8DD] w-screen min-h-screen overflow-x-hidden">
 			<NavBar tipo="deposito" />
-			<div className="flex flex-row flex-wrap justify-center items-center gap-20.5 md:mt-5 ">
+	
+			{/* cards */}
+			<div className="flex flex-row justify-center gap-3 mt-4 px-2">
 				<CardQtde
-					titulo="Quantidade Deposito:"
+					titulo="Quantidade Depositada:"
 					total={totalDepositado}
 				/>
 				<CardQtde
@@ -72,7 +74,9 @@ export default function TelaDeposito() {
 					}
 				/>
 			</div>
-			<div className="flex flex-wrap flex-row gap-15.75 pl-5 pt-7">
+	
+			{/* notas */}
+			<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8 px-4 justify-items-center">
 				{Object.entries(notasSelecionadas).map(([valor]) => (
 					<CardNotas
 						key={valor}
@@ -81,22 +85,26 @@ export default function TelaDeposito() {
 					/>
 				))}
 			</div>
-			<footer className="flex justify-center gap-4 items-end md:pt-16 w-full">
-					<div className="w-35">
-						<BotaoNavegacao
-							className="w-full bg-[#567DB7] text-white py-3 rounded-xl text-lg"
-							nome="Voltar"
-							rota="conta"
-						/>
-					</div>
-
-					<button
-						onClick={enviarDeposito}
-						className="w-35 bg-[#567DB7] text-white py-3 rounded-xl text-lg cursor-pointer"
-					>
-						Retirar
-					</button>
+	
+			{/* botões */}
+			<footer className="flex justify-center gap-4 mt-21 pb-6">
+				<div className="w-[140px]">
+					<BotaoNavegacao
+						className="w-full bg-[#567DB7] text-white py-3 rounded-xl text-lg"
+						nome="Voltar"
+						rota="conta"
+					/>
+				</div>
+	
+				<button
+					onClick={enviarDeposito}
+					className="w-[140px] bg-[#567DB7] text-white py-3 rounded-xl text-lg cursor-pointer"
+				>
+					Depositar
+				</button>
 			</footer>
+	
 		</div>
+		
 	);
 }

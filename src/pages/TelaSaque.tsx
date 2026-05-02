@@ -3,8 +3,10 @@ import CardQtde from "../components/CardQtde";
 import BotaoNavegacao from "../components/BotaoNavegacao";
 import { useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
+import ModalErro from "../components/ModalErro";
 import getUser from "../services/user";
 import { withdrawPost, Notas } from "../services/transferencias_service";
+
 
 export default function TelaSaque() {
 	const [user, setUser] = useState<any>();
@@ -32,10 +34,17 @@ export default function TelaSaque() {
 		"200": 0,
 	});
 
+	const [erro, setErro] = useState("");
+
 	const enviarSaque = () => {
-		const resposta = withdrawPost(notasSelecionadas);
-		console.log(resposta);
-	};
+	if (totalSaque > saldo) {
+		setErro("Saldo insuficiente para transação");
+		return;
+	}
+
+	const resposta = withdrawPost(notasSelecionadas);
+	console.log(resposta);
+};
 	function atualizarNotas(valor: keyof Notas, qntde: number) {
 		setNotasSelecionadas((prev) => {
 			const novo = { ...prev };
@@ -55,47 +64,61 @@ export default function TelaSaque() {
 		0,
 	);
 	return (
-		<div className="bg-[#CBD8DD] min-w-screen min-h-screen overflow-x-hidden">
-			<NavBar tipo="deposito" />
-			<div className="flex flex-row flex-wrap justify-center items-center gap-20.5 md:mt-5 ">
-				<CardQtde
-					titulo="Quantidade Deposito:"
-					total={totalSaque}
-				/>
-				<CardQtde
-					titulo="Quantidade Final:"
-					total={
-						Number.isNaN(saldo + totalSaque)
-							? 0
-							: saldo + totalSaque
-					}
-				/>
-			</div>
-			<div className="flex flex-wrap flex-row gap-15.75 pl-5 pt-7">
-				{Object.entries(notasSelecionadas).map(([valor]) => (
-					<CardNotas
-						key={valor}
-						valorNota={valor as keyof Notas}
-						onchange={atualizarNotas}
-					/>
-				))}
-			</div>
-			<footer className="flex justify-center gap-4 items-end md:pt-16 w-full">
-					<div className="w-35">
-						<BotaoNavegacao
-							className="w-full bg-[#567DB7] text-white py-3 rounded-xl text-lg"
-							nome="Voltar"
-							rota="conta"
-						/>
-					</div>
+	<div className="bg-[#CBD8DD] w-screen min-h-screen overflow-x-hidden">
+		<NavBar tipo="saque" />
 
-					<button
-						onClick={enviarSaque}
-						className="w-35 bg-[#567DB7] text-white py-3 rounded-xl text-lg cursor-pointer"
-					>
-						Retirar
-					</button>
-			</footer>
+		{/* cards */}
+		<div className="flex flex-row justify-center gap-3 mt-4 px-2">
+			<CardQtde
+				titulo="Quantidade a Sacar:"
+				total={totalSaque}
+			/>
+			<CardQtde
+				titulo="Quantidade Final:"
+				total={
+					Number.isNaN(saldo + totalSaque)
+						? 0
+						: saldo + totalSaque
+				}
+			/>
 		</div>
-	);
+
+		{/* notas */}
+		<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8 px-4 justify-items-center">
+			{Object.entries(notasSelecionadas).map(([valor]) => (
+				<CardNotas
+					key={valor}
+					valorNota={valor as keyof Notas}
+					onchange={atualizarNotas}
+				/>
+			))}
+		</div>
+
+		{/* botões */}
+		<footer className="flex justify-center gap-4 mt-21 pb-6">
+			<div className="w-[140px]">
+				<BotaoNavegacao
+					className="w-full bg-[#567DB7] text-white py-3 rounded-xl text-lg"
+					nome="Voltar"
+					rota="conta"
+				/>
+			</div>
+
+			<button
+				onClick={enviarSaque}
+				className="w-[140px] bg-[#567DB7] text-white py-3 rounded-xl text-lg cursor-pointer"
+			>
+				Retirar
+			</button>
+		</footer>
+
+		{erro && (
+			<ModalErro
+				mensagem={erro}
+				onClose={() => setErro("")}
+	/>
+		)}
+	</div>
+	
+);
 }

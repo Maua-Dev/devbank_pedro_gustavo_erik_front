@@ -36,6 +36,7 @@ export default function TelaTransacoes() {
 	return (
 		<div className="min-h-screen bg-[#CBD8DD] flex flex-col">
 			<NavBar tipo="historico" />
+
 			{/* usando key para verificar o tipo da transação */}
 			<div className="flex flex-col gap-4 px-4 mt-6">
 				{transacoes.map((transacao, index) => (
@@ -48,7 +49,7 @@ export default function TelaTransacoes() {
 			</div>
 
 			{/* div dos botões, espaçamento e animação on click */}
-			<div className="flex flex-col md:flex-row justify-center items-center md:gap-12 mt-120 mb-6 px-4">
+			<div className="fixed bottom-4 left-1/2 -translate-x-1/2 flex flex-col md:flex-row gap-4 md:gap-12 z-50">
 				{botoesNav.map((botaoNav) => (
 					<BotaoNavegacao
 						key={botaoNav.nome}
