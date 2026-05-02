@@ -4,7 +4,7 @@ import NavBar from "../components/NavBar";
 function TelaConta() {
 	const rotas = [
 		{
-			nome: "Sacar",
+			nome: "Saque",
 			rota: "saque",
 		},
 		{

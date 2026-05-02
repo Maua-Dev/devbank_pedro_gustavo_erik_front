@@ -15,34 +15,36 @@ export default function CardNotas({ valorNota, onchange }: CardNotas) {
 	}
 
 	return (
-		<div>
-			<div className="flex flex-col gap-[13.5px] items-center">
-				<p className="flex justify-center items-center text-4xl bg-[#567DB7] w-66 h-25.25	  text-center rounded-[30px] text-white">
-					{valorNota}R$
+		<div className="flex flex-col gap-[13.5px] items-center">
+			
+			<p className="flex justify-center items-center text-4xl bg-[#567DB7] w-52 h-24 text-center rounded-[30px] text-white">
+				{valorNota}R$
+			</p>
+
+			<div className="flex flex-row justify-around w-full">
+				
+				<button
+					className="w-[3.7475rem] h-10 bg-[#567DB7] text-white rounded-[30px] cursor-pointer"
+					onClick={() => {
+						qntdNotas > 0
+							? alterarQntde(qntdNotas - 1)
+							: alert("Não à notas neste valor selecionadas");
+					}}
+				>
+					-
+				</button>
+
+				<p className="flex justify-center items-center w-[4.936rem] h-10 bg-[#99B3D9] text-black rounded-[30px]">
+					{qntdNotas}
 				</p>
-				<div className="flex flex-row justify-around">
-					<button
-						className="w-[3.7475rem] h-10 bg-[#567DB7] text-white rounded-[30px] cursor-pointer"
-						onClick={() => {
-							qntdNotas > 0
-								? alterarQntde(qntdNotas - 1)
-								: alert("Não à notas neste valor selecionadas");
-						}}
-					>
-						-
-					</button>
-					<p className=" flex justify-center items-center w-[4.936rem] h-10 ml-10.75 mr-10.75 bg-[#99B3D9] text-black rounded-[30px]">
-						{qntdNotas}
-					</p>
-					<button
-						className="w-[3.7475rem] h-10 rounded-[30px] bg-[#567DB7] text-white cursor-pointer"
-						onClick={() => {
-							alterarQntde(qntdNotas + 1);
-						}}
-					>
-						+
-					</button>
-				</div>
+
+				<button
+					className="w-[3.7475rem] h-10 bg-[#567DB7] text-white rounded-[30px] cursor-pointer"
+					onClick={() => alterarQntde(qntdNotas + 1)}
+				>
+					+
+				</button>
+
 			</div>
 		</div>
 	);
